@@ -14,6 +14,9 @@
   interface Emits {
     /** @description Fired with the deleted ID after a successful delete operation. */
     deleted: [id: string];
+
+    /** @description Fired with the updated asset class after a successful edit operation. */
+    saved: [asset: AssetClass];
   }
 
   defineProps<Props>();
@@ -140,6 +143,7 @@
       :asset="pendingEdit"
       :open="true"
       @update:open="onEditDialogOpenChange"
+      @saved="(asset) => emit('saved', asset)"
     />
   </div>
 </template>

@@ -1,8 +1,7 @@
 <script setup lang="ts">
   import { DialogOverlay, DialogPortal, DialogRoot } from "reka-ui";
-  import { ref } from "vue";
 
-  import { validateAssetClass, useToast } from "#imports";
+  import { validateAssetClass, useToast, watch, ref } from "#imports";
   import type { AssetClass } from "~/openapi";
   import type { AssetClassErrors } from "~/types/utils/validators";
 
@@ -17,11 +16,31 @@
   interface Emits {
     /** @description Fired when the dialog's open state changes. */
     "update:open": [open: boolean];
+    saved: [asset: AssetClass];
   }
 
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
   const toast = useToast();
+
+  const name = ref(props.asset.name);
+  const description = ref(props.asset.description);
+
+  const errors = ref<AssetClassErrors>({ name: undefined });
+  const isSubmitting = ref(false);
+
+  watch(
+    () => props.open,
+    (isOpen) => {
+      if (!isOpen) {
+        return;
+      }
+
+      errors.value = { name: undefined };
+      name.value = props.asset.name;
+      description.value = props.asset.description;
+    },
+  );
 
   /**
    * @description Forwards reka-ui's open-state changes to the parent.
@@ -32,9 +51,18 @@
     emit("update:open", open);
   };
 
-  const errors = ref<AssetClassErrors>({ name: undefined });
+  const updateAssetClass = async (): Promise<void> => {
+    const updated = await $fetch<AssetClass>(`/api/assets/${props.asset.id}`, {
+      body: {
+        description: description.value || undefined,
+        name: name.value,
+      },
+      method: "PATCH",
+    });
 
-  const isSubmitting = ref(false);
+    emit("saved", updated);
+    emit("update:open", false);
+  };
 
   /**
    * @description Submit button handler: submits the updated asset information and closes the
@@ -42,7 +70,7 @@
    */
   const onSubmit = (): void => {
     // Validate the form input values
-    errors.value = validateAssetClass(props.asset.name);
+    errors.value = validateAssetClass(name.value);
     if (errors.value.name) {
       return;
     }
@@ -50,8 +78,8 @@
     isSubmitting.value = true;
 
     try {
-      const msg = `Edited ${props.asset.name}`;
-      emit("update:open", false);
+      updateAssetClass();
+      const msg = `Edited ${name.value}`;
       toast.publish(msg);
     } finally {
       isSubmitting.value = false;
@@ -95,6 +123,7 @@
               aria-describedby="asset-name-error"
               label="Name"
               placeholder="e.g. Equities"
+              v-model="name"
             />
             <p
               v-if="errors.name"
@@ -110,6 +139,7 @@
             label="Description"
             placeholder="What belongs in this asset class?"
             :rows="3"
+            v-model="description"
           />
         </form>
 
@@ -121,12 +151,7 @@
           </button>
 
           <!-- The submit button -->
-          <button
-            class="btn-primary"
-            type="submit"
-            @submit.prevent="onSubmit"
-            @click="onSubmit"
-          >
+          <button class="btn-primary" type="submit" @click="onSubmit">
             Submit
           </button>
         </div>
