@@ -58,7 +58,7 @@ func New(
 	handler http.Handler,
 	logger *slog.Logger,
 ) (*Application, error) {
-	server := &http.Server{ //nolint:exhaustruct
+	server := &http.Server{ //nolint:exhaustruct_v5
 		Addr:         cfg.Addr,
 		Handler:      handler,
 		ReadTimeout:  cfg.ReadTimeout,

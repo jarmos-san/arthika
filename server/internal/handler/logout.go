@@ -13,7 +13,7 @@ import (
 // existing auth_token cookie from the client. MaxAge=-1 instructs the browser
 // to remove the cookie immediately.
 func expiredAuthCookie() *http.Cookie {
-	//nolint:gosec,exhaustruct // Secure is configurable via COOKIE_SECURE; only
+	//nolint:gosec,exhaustruct_v5 // Secure is configurable via COOKIE_SECURE; only
 	// relevant fields set.
 	return &http.Cookie{
 		Name:     "auth_token",

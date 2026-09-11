@@ -79,7 +79,7 @@ func TestLoadConfig_InvalidDurationFallsBack(t *testing.T) {
 	t.Setenv("READ_TIMEOUT", "invalid")
 
 	cfg := config.LoadConfig()
-	def := config.Config{ //nolint:exhaustruct
+	def := config.Config{ //nolint:exhaustruct_v5
 		ReadTimeout: 10 * time.Second,
 	}
 
@@ -96,7 +96,7 @@ func TestLoadConfig_PartialOverride(t *testing.T) {
 	t.Setenv("ADDR", ":7000")
 
 	cfg := config.LoadConfig()
-	def := config.Config{ //nolint:exhaustruct
+	def := config.Config{ //nolint:exhaustruct_v5
 		ReadTimeout: 10 * time.Second,
 	}
 

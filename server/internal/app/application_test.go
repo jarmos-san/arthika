@@ -36,7 +36,7 @@ func newTestLogger() *slog.Logger {
 func TestNew_InitializesApplication(t *testing.T) {
 	t.Parallel()
 
-	cfg := config.Config{ //nolint:exhaustruct
+	cfg := config.Config{ //nolint:exhaustruct_v5
 		Addr:         ":0", // use ephemeral port
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 5 * time.Second,
@@ -82,7 +82,7 @@ func mustListen(t *testing.T) net.Listener {
 	listenConfig := net.ListenConfig{
 		Control:         nil,
 		KeepAlive:       0,
-		KeepAliveConfig: net.KeepAliveConfig{}, //nolint:exhaustruct
+		KeepAliveConfig: net.KeepAliveConfig{}, //nolint:exhaustruct_v5
 	}
 
 	ln, err := listenConfig.Listen(context.Background(), "tcp", ":0")
@@ -103,7 +103,7 @@ func TestRunAndShutdown(t *testing.T) {
 
 	defer func() { _ = listener.Close() }()
 
-	cfg := config.Config{ //nolint:exhaustruct
+	cfg := config.Config{ //nolint:exhaustruct_v5
 		Addr:         listener.Addr().String(),
 		ReadTimeout:  2 * time.Second,
 		WriteTimeout: 2 * time.Second,
@@ -180,7 +180,7 @@ func TestServer_HandlesRequest(t *testing.T) {
 
 	defer func() { _ = listener.Close() }()
 
-	cfg := config.Config{ //nolint:exhaustruct
+	cfg := config.Config{ //nolint:exhaustruct_v5
 		Addr:         listener.Addr().String(),
 		ReadTimeout:  2 * time.Second,
 		WriteTimeout: 2 * time.Second,
