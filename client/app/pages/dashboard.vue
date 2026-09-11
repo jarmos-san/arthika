@@ -34,6 +34,7 @@
       <AssetDescriptionTable
         :asset-classes="assetClasses"
         @deleted="() => refresh()"
+        @saved="() => refresh()"
       />
     </main>
   </div>
