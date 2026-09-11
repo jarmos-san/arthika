@@ -16,18 +16,11 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v7.0.1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v7.0.0
+      - name: Setup Node.js environment
+        uses: pnpm/setup@v2.1.0
         with:
-          node-version: 26
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6.1.0
-        with:
-          version: latest
-
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+          working-directory: ./client
+          cache: true
 
       - name: Enforce Linting Rules
         run: pnpm run lint
@@ -42,18 +35,11 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v7.0.1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v7.0.0
+      - name: Setup Node.js environment
+        uses: pnpm/setup@v2.1.0
         with:
-          node-version: 26
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6.1.0
-        with:
-          version: latest
-
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+          working-directory: ./client
+          cache: true
 
       - name: Enforce Formatting Rules
         run: pnpm run fmt:check
@@ -68,18 +54,11 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v7.0.1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v7.0.0
+      - name: Setup Node.js environment
+        uses: pnpm/setup@v2.1.0
         with:
-          node-version: 26
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6.1.0
-        with:
-          version: latest
-
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+          working-directory: ./client
+          cache: true
 
       - name: Run Type Check
         run: pnpm typecheck
@@ -94,18 +73,11 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v7.0.1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v7.0.0
+      - name: Setup Node.js environment
+        uses: pnpm/setup@v2.1.0
         with:
-          node-version: 26
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6.1.0
-        with:
-          version: latest
-
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+          working-directory: ./client
+          cache: true
 
       - name: Run Tests
         run: pnpm test
@@ -120,18 +92,11 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v7.0.1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v7.0.0
+      - name: Setup Node.js environment
+        uses: pnpm/setup@v2.1.0
         with:
-          node-version: 26
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6.1.0
-        with:
-          version: latest
-
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+          working-directory: ./client
+          cache: true
 
       - name: Build the Project
         run: pnpm build
