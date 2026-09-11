@@ -33,9 +33,9 @@ var errUserAlreadyExists = errors.New("email already registered")
 // newAuthCookie creates an HttpOnly JWT cookie with the configured security
 // attributes.
 func newAuthCookie(token string) *http.Cookie {
-	//nolint:gosec,exhaustruct // Secure is configurable via COOKIE_SECURE; only
+	//nolint:gosec // Secure is configurable via COOKIE_SECURE; only
 	// relevant fields set.
-	return &http.Cookie{
+	return &http.Cookie{ //nolint:exhaustruct_v5
 		Name:     "auth_token",
 		Value:    token,
 		Path:     "/",

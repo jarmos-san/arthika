@@ -35,7 +35,7 @@ type errorResponse struct {
 // testCookie creates an auth cookie for testing. Security attributes are
 // intentionally omitted since these are test fixtures.
 func testCookie(value string) *http.Cookie {
-	//nolint:gosec,exhaustruct // Test fixture, no security attributes needed.
+	//nolint:gosec,exhaustruct_v5 // Test fixture, no security attributes needed.
 	return &http.Cookie{Name: testCookieName, Value: value}
 }
 
